@@ -88,8 +88,8 @@ class AthensdaHelper( Folder, BasePlugin):
     security.declarePrivate('updateCredentials')
     def updateCredentials(self, request, response, login, new_password):
         """ Redirect User to Athens. """
-        import pdb
-        pdb.set_trace();
+        #import pdb
+        #pdb.set_trace();
         
         user =  request.AUTHENTICATED_USER
         perm_set = None

@@ -11,30 +11,35 @@ import interface
 import plugins
 
 
-## Imported class by Riz
+## Imported class for plugin implementation
 from OFS.Folder import Folder # ? needed
 from Crypto.Cipher import AES
 from Crypto.Util import randpool
 from datetime import datetime
 
 import time, base64, urllib
+
+import logging
+
 from zLOG import LOG, INFO
 from urlparse import urlparse
+
+from zope.interface import Interface
 
 from Products.PluggableAuthService.interfaces.plugins import \
         ICredentialsUpdatePlugin
 
+logger = logging.getLogger('pas.plugin.athensda')
 
 class AthensdaHelper( Folder, BasePlugin):
     """Multi-plugin
 
     """
 
-    meta_type = 'athensda Helper'
+    meta_type = 'AthensDA Helper'
     security = ClassSecurityInfo()
     
-    # attributes define by Riz
-    
+    # custom attributes     
     athens_url = 'https://auth.athensams.net'
     return_url = 'http://www.rcseng.ac.uk'
     org_id = 'urn:mace:eduserv.org.uk:athens:provider:rcseng.ac.uk'
@@ -77,13 +82,21 @@ class AthensdaHelper( Folder, BasePlugin):
     def __init__( self, id, title=None ):
         self._setId( id )
         self.title = title
+        logger.info('Engine been at AthensDA PAS Plugin.')
+        
     
     security.declarePrivate('updateCredentials')
     def updateCredentials(self, request, response, login, new_password):
         """ Redirect User to Athens. """
+        import pdb
+        pdb.set_trace();
+        
         user =  request.AUTHENTICATED_USER
         perm_set = None
         decoded_key = base64.b64decode(self.key+'==')
+        logger.info('Engine been at AthensDA PAS Plugin.')
+        LOG('AthenPASPlugin',INFO, "I'm here in Athens DA Plugin")
+        
         if request.get('t') == 'dsr':
             request.response.redirect(self.athens_url + '?' + self.geturl_encoded_string_for_hdd(request, response))
         else:

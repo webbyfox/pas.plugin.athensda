@@ -88,14 +88,10 @@ class AthensdaHelper( Folder, BasePlugin):
     security.declarePrivate('updateCredentials')
     def updateCredentials(self, request, response, login, new_password):
         """ Redirect User to Athens. """
-        #import pdb
-        #pdb.set_trace();
-        
+       
         user =  request.AUTHENTICATED_USER
         perm_set = None
         decoded_key = base64.b64decode(self.key+'==')
-        logger.info('Engine been at AthensDA PAS Plugin.')
-        LOG('AthenPASPlugin',INFO, "I'm here in Athens DA Plugin")
         
         if request.get('t') == 'dsr':
             request.response.redirect(self.athens_url + '?' + self.geturl_encoded_string_for_hdd(request, response))
@@ -132,6 +128,7 @@ class AthensdaHelper( Folder, BasePlugin):
         decoded_key = base64.b64decode(self.key+'==')
         perm_set = None
         user =  request.AUTHENTICATED_USER
+        
         permission_set = self.get_simsathens_permissions(contact_number=user).dictionaries()
         
         if request.get('came_from'):

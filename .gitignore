@@ -6,3 +6,4 @@
 Thumbs.db
 # ignore paster related eggs put here by buildout/ZopeSkel
 paste*.egg
+/dist
